@@ -1,4 +1,4 @@
-import { verbsMostCommonPresent } from "../../../../verbsMostUsed";
+import { verbsMostCommonPresent } from "../../dictionary/simplePresentMostCommonVerbs";
 import { IPrepare, Ifiltered, Iscore } from "../../../../interfaces";
 
 import filterbyParams from "../../searchByParams";
@@ -17,12 +17,6 @@ const wordtobeFiltered = [
 ];
 
 type ending = "s" | "es" | "ies";
-
-
-
-
-
-
 
 function cloneAndQuery(letters: Array<string>, word: ending, verbs: string[], arraytoPushInto: string[]): boolean {
     const clone = JSON.parse(JSON.stringify(letters))
@@ -146,4 +140,3 @@ export function PrepareTense(data: Ifiltered, txt: IPrepare[]): IPrepare[] {
 }
 
 
- 

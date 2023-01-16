@@ -1,6 +1,6 @@
-import Base from "../../../../classText";
+import Base from "../../main";
 
-import { verbsMostCommonPresent } from "../../../../verbsMostUsed";
+import { verbsMostCommonPresent } from "../../dictionary/simplePresentMostCommonVerbs";
 import { IPrepare, Ifiltered, Iscore, ITense } from "../../../../interfaces";
 
 
