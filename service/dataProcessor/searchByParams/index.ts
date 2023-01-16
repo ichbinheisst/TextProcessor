@@ -46,3 +46,6 @@ function finByParams(data: IPrepare[], params: string[]): Ifiltered {
 
 
 export default finByParams;
+
+
+///isUniqueFunction 

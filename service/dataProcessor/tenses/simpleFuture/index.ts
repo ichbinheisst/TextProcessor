@@ -1,7 +1,8 @@
-import { IPrepare, Ifiltered } from "../../../../interfaces"
-import finByParams from "../../searchByParams"
-export function FutureSimple(data: IPrepare[]): Ifiltered {
-    const paramSfuture = [
+import { IPrepare, Ifiltered, ITense } from "../../../../interfaces"
+import Base from "../../main"
+
+class SimpleFuture extends Base implements ITense {
+    private list = [
         "will",
         "won't",
         "it'll",
@@ -11,9 +12,14 @@ export function FutureSimple(data: IPrepare[]): Ifiltered {
         "I'll",
         "we'll",
         "they'll",
-        "you'll"
-    ]
-    const res = finByParams(data, paramSfuture)
-    return res
+        "you'll"]
+
+    Index(data: IPrepare[]): Ifiltered {
+        const res = this.finByParams(data, this.list)
+        return res
+
+    }
+
 }
- 
+
+export default SimpleFuture

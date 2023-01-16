@@ -11,8 +11,6 @@ import { IPrepare, Ifiltered, Iscore } from "../../../interfaces"
 interface IBase {
     Prepare: (data: string) => IPrepare[]
     finByParams(data: IPrepare[], params: string[]): Ifiltered
-
-
 }
 
 class Base implements IBase {
@@ -69,6 +67,16 @@ class Base implements IBase {
         const splited = this.formatData(cleanedData);
         return splited;
     }
+
+    generateUniqueArrayFromArraysOfString(data: string[], uniqueArray: string[]): void {
+        data.forEach((element) => {
+            const checkUnique = uniqueArray.some((el) => el.trim().toLowerCase() == element.trim().toLocaleLowerCase())
+            if (checkUnique) {
+                uniqueArray.push(element)
+            }
+        })
+    }
+
     finByParams(data: IPrepare[], params: string[]): Ifiltered {
         let targetWords: Array<string> = [];
         let foundSentences: Array<string> = []
@@ -85,14 +93,24 @@ class Base implements IBase {
                     }
                     const newWordString = wordsArray.reduce((prev, cur) => `${prev} ${cur}`)
                     const check = params.some((wrd) => wrd.trim() == newWordString)
+
+
+
                     if (check) {
                         targetWords.push(newWordString)
+
+
+
                         const sentencesReduced = sentences.text.reduce((prev, cur) => `${prev} ${cur}`)
                         const checkNoRepeated = foundSentences.some((stc) => stc.trim().toLowerCase() == sentencesReduced.trim().toLowerCase())
                         if (!checkNoRepeated) {
                             foundSentences.push(sentencesReduced)
                         }
                     }
+
+
+
+
 
                 }
 
@@ -133,8 +151,6 @@ class Base implements IBase {
 
         return res
     }
-
-
 }
 
 export default Base
