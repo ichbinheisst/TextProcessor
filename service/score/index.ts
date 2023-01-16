@@ -35,3 +35,7 @@ function score(data: Array<IPrepare>, params: string[]): Iscore {
 }
 
 export { score, calculatePorcentage }
+
+
+
+ 

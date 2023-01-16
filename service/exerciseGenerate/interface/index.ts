@@ -22,7 +22,9 @@ export interface IUnscramble {
     answer: string
 
 }
-
+ export interface IActivity {
+    create: (data: ISubtitle[]) => any
+}
 
 export interface IUnscrambleActivity extends ISubtitle {
     activity: IUnscramble
