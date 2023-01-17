@@ -15,7 +15,7 @@ class SimpleFuture extends Base implements ITense {
         "you'll"]
 
     Index(data: IPrepare[]): Ifiltered {
-        const res = this.finByParams(data, this.list)
+        const res = this.findByParams(data, this.list)
         return res
 
     }

@@ -1,41 +1,97 @@
-import { Ifiltered, IPrepare, Iscore } from '../../interfaces';
-import finByParams from '../dataProcessor/searchByParams';
+import { Ifiltered, IPrepare, Iscore, IParams, IGlossary } from '../../interfaces';
+import Base from '../dataProcessor/main';
+import Glossary from '../indexer';
+import SimpleFuture from '../dataProcessor/tenses/simpleFuture';
+import PastPerfect from '../dataProcessor/tenses/pastPerfect';
+import SimplePresent from '../dataProcessor/tenses/simplePresent';
+import PresentPerfect from '../dataProcessor/tenses/presentPerfect';
+import SimplePastContinous from '../dataProcessor/tenses/simplePastContinous';
+import SimplePresentContinous from '../dataProcessor/tenses/simpleContinous';
+import SimplePast from '../dataProcessor/tenses/simplePast';
+type tense =
+    "simple present" |
+    "present continous" |
+    "simple past" |
+    "future-will" |
+    "past continuous"
 
-function calculatePorcentage(total: number, concluded: number) {
-    if (!total || !concluded) {
-        return 0;
-    }
-    let n1 = concluded * 10;
-    return Math.round((n1 / total) * 10);
-}
-
-function score(data: Array<IPrepare>, params: string[]): Iscore {
-    const length = data.length
-    const filtered = finByParams(data, params)
-    const numberOfTargetWords = filtered.numberOfTargetWords
-    const porcentage = calculatePorcentage(length, numberOfTargetWords)
-    const NoRepeat: string[] = []
-
-    filtered.targetWords
-    for (let index = 0; index < filtered.targetWords.length; index++) {
-        let checkRepeated = NoRepeat.some((word) => word)
-        if (!checkRepeated) {
-            NoRepeat.push(filtered.targetWords[index])
+class Score extends Base {
+    calculatePorcentage(total: number, concluded: number) {
+        if (!total || !concluded) {
+            return 0;
         }
+        let n1 = concluded * 10;
+        return Math.round((n1 / total) * 10);
+    }
+    private FilterTenses(data: IPrepare[], tense: tense[]): Ifiltered[] {
+
+        const response = tense.map(element => {
+            let res: Ifiltered;
+            switch (element) {
+                case "simple present":
+                    res = new SimplePresent().Index(data)
+                    break
+                case "simple past":
+                    res = new SimplePast().Index(data)
+                    break
+                case "future-will":
+                    res = new SimpleFuture().Index(data)
+                    break
+                case "present continous":
+                    res = new SimplePresentContinous().Index(data)
+                    break
+                case "past continuous":
+                    res = new SimplePastContinous().Index(data)
+
+            }
+            res.subject = element
+            return res
+
+        });
+
+
+        return response
+
+
 
     }
-
-    const uniquePorcentage = calculatePorcentage(length, NoRepeat.length)
-    const res = {
-        bruto: porcentage,
-        unique: uniquePorcentage
+    private JoinResponses(text: string): Ifiltered[] {
+        const txt = this.Prepare(text)
+        const response: Ifiltered[] = []
+        const glos = new Glossary()
+        glos.getGlossary().forEach((param) => {
+            const responseTenses = this.FilterTenses(txt, param.tenses)
+            responseTenses.forEach((rs) => response.push(rs))
+            param.content.forEach((par) => {
+                const params = glos.getParamsbyId(par.id)
+                const responseParams = this.findByParams(txt, params.data)
+                responseParams.subject = par.name
+                response.push(responseParams)
+            })
+        })
+        return response
     }
+    score(text: string) {
+        const fullLength = this.Prepare(text).length
+        const res: Ifiltered[] = this.JoinResponses(text)
+        res.forEach((items) => {
+            const value = items.sentences.length
+            const porcentage = this.calculatePorcentage(fullLength, value)
+            console.table(`subject: ${items.subject} possui ${items.numberOfTargetWords} 
+            palavras do assunto em texto de ${fullLength} linhas, sendo ${items.sentences.length} com conteúdo, 
+            ou ${porcentage}% de aproveitamento`
+            )
+        })
 
-    return res
+
+
+
+
+
+    }
 }
 
-export { score, calculatePorcentage }
+export default Score
 
 
 
- 

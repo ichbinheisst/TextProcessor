@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-function finByParams(data, params) {
+function findByParams(data, params) {
     var targetWords = [];
     var foundSentences = [];
     data.forEach(function (sentences) {
@@ -34,4 +34,25 @@ function finByParams(data, params) {
     };
     return res;
 }
-exports.default = finByParams;
+function findByParams2(data, params) {
+    var targetWords = [];
+    var foundSentences = [];
+    data.forEach(function (sentences) {
+        var sentence = sentences.text.join(' ');
+        params.forEach(function (word) {
+            if (sentence.includes(word)) {
+                targetWords.push(word);
+                if (!foundSentences.includes(sentence)) {
+                    foundSentences.push(sentence);
+                }
+            }
+        });
+    });
+    return {
+        targetWords: targetWords,
+        numberOfTargetWords: targetWords.length,
+        sentences: foundSentences
+    };
+}
+exports.default = findByParams2;
+///isUniqueFunction 

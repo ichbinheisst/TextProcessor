@@ -9,6 +9,7 @@ interface IPrepare {
 }
 
 interface Ifiltered {
+    subject?: string
     targetWords: string[]
     sentences: string[]
     numberOfTargetWords: number
@@ -24,8 +25,8 @@ interface Script {
     text: string,
     time: Timerscript,
     selected: boolean,
-    translate: boolean, 
-    translation?:string|undefined
+    translate: boolean,
+    translation?: string | undefined
 
 }
 
@@ -33,8 +34,8 @@ interface Script {
 interface IParams {
     data: string[],
     type: string,
-    level: string, 
-    id:number
+    level: string,
+    id: number
 }
 
 
@@ -46,4 +47,27 @@ interface ITense {
 }
 
 
-export { Script, Timerscript, IPrepare,Ifiltered ,Iscore, IParams, ITense}
+
+type tense =
+    "simple present" |
+    "present continous" |
+    "simple past" |
+    "future-will" |
+    "past continuous"
+
+
+    
+export interface ISubject {
+    name: string,
+    id: number
+}
+
+
+export interface IGlossary {
+    level: string,
+    content: ISubject[],
+    tenses: tense[],
+    vocabulary: string[]
+}
+
+export { Script, Timerscript, IPrepare, Ifiltered, Iscore, IParams, ITense }

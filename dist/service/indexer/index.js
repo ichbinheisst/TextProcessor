@@ -17,11 +17,9 @@ var Glossary = /** @class */ (function () {
                 ],
                 tenses: [
                     "simple present",
-                    "present Continous",
+                    "present continous",
                     "simple past",
                     "future-will",
-                    "future-going to",
-                    "would"
                 ],
                 vocabulary: [
                     "weather"
@@ -112,8 +110,16 @@ var Glossary = /** @class */ (function () {
     }
     Glossary.prototype.getParamsbyId = function (id) {
         var res = this.params.find(function (param) {
-            return param.id = id;
+            return param.id == id;
         });
+        if (!res) {
+            return {
+                data: [],
+                type: "",
+                level: "",
+                id: id
+            };
+        }
         return res;
     };
     Glossary.prototype.getGlossary = function () {

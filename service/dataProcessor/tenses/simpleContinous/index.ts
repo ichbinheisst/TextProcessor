@@ -5,10 +5,10 @@ import Base from "../../main";
 class SimplePresentContinous extends Base implements ITense {
     tobe = ["is", "am", "are", "I'm", "you're", "she's", "he's", "it's", "they're", "we're", "isn't", "aren't", "be"];
     private findSentencesverbTobe(data: IPrepare[]): Ifiltered {
-        const res = this.finByParams(data, this.tobe)
+        const res = this.findByParams(data, this.tobe)
         return res
     }
-    private findSentecesWithING(data: Ifiltered): Ifiltered {
+    private findSentencesWithING(data: Ifiltered): Ifiltered {
         const sentences = data.sentences;
         const targetWords: string[] = []
         const MatchedSentences: string[] = []
@@ -16,12 +16,13 @@ class SimplePresentContinous extends Base implements ITense {
             sentence.split(" ").forEach((word) => {
                 const letters = word.split("")
                 if (letters.length > 3) {
-                    const lastLetterIndex = letters.length - 1
-                    if (letters[lastLetterIndex] == "g" && letters[lastLetterIndex - 1] && "n" && letters[lastLetterIndex - 2] == "i") {
+                    if (word.includes("ing")) {
                         targetWords.push(word)
                         MatchedSentences.push(sentence)
                     }
+
                 }
+
             })
         })
 
@@ -44,7 +45,7 @@ class SimplePresentContinous extends Base implements ITense {
     }
     Index(data: IPrepare[]): Ifiltered {
         const sentencesVerbTobe = this.findSentencesverbTobe(data)
-        const PresentContinous = this.findSentecesWithING(sentencesVerbTobe);
+        const PresentContinous = this.findSentencesWithING(sentencesVerbTobe);
         return PresentContinous
     }
 

@@ -1,17 +1,7 @@
 
-import { IParams } from "../../interfaces"
+import { IParams, IGlossary } from "../../interfaces"
 
-interface ISubject {
-    name: string,
-    id: number
-}
 
-interface IGlossary {
-    level: string,
-    content: ISubject[],
-    tenses: string[],
-    vocabulary: string[]
-}
 
 class Glossary {
     private glossary: IGlossary[] = [
@@ -30,11 +20,9 @@ class Glossary {
             ],
             tenses: [
                 "simple present",
-                "present Continous",
+                "present continous",
                 "simple past",
                 "future-will",
-                "future-going to",//undone 
-                "would"
             ],
             vocabulary: [
                 "weather"
@@ -137,16 +125,25 @@ class Glossary {
 
 
     ]
-    public getParamsbyId(id: number): IParams | undefined {
+    public getParamsbyId(id: number): IParams {
         const res = this.params.find((param) => {
-            return param.id = id
+            return param.id == id
         })
+        if (!res) {
+
+            return {
+                data: [],
+                type: "",
+                level: "",
+                id: id
+            }
+        }
         return res
     }
     public getGlossary(): IGlossary[] {
         return this.glossary
     }
-    public getByLevelGlossary(level: "a1" | "a2" | "b1" | "b2")  {
+    public getByLevelGlossary(level: "a1" | "a2" | "b1" | "b2") {
         const res = this.glossary.find((param) => {
             return param.level == level
         })
