@@ -14,16 +14,6 @@ interface IBase {
 }
 
 class Base implements IBase {
-    /*    calculatePorcentage(total: number, concluded: number) {
-            if (!total || !concluded) {
-                return 0;
-            }
-            let n1 = concluded * 10;
-            return Math.round((n1 / total) * 10);
-        }
-    
-    */
-
 
     private treatData(text: string): string {
         const Text = text

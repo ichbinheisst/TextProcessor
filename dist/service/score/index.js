@@ -61,16 +61,6 @@ var Score = /** @class */ (function (_super) {
         });
         return response;
     };
-    Score.prototype.FilterParams = function (data, params) {
-        var _this = this;
-        var responde = [];
-        params.forEach(function (param) {
-            var res = _this.findByParams(data, param.data);
-            res.subject = param.type;
-            responde.push(res);
-        });
-        return responde;
-    };
     Score.prototype.JoinResponses = function (text) {
         var _this = this;
         var txt = this.Prepare(text);
@@ -95,10 +85,9 @@ var Score = /** @class */ (function (_super) {
         res.forEach(function (items) {
             var value = items.sentences.length;
             var porcentage = _this.calculatePorcentage(fullLength, value);
-            console.table("subject: ".concat(items.subject, " possui ").concat(items.numberOfTargetWords, " \n            palavras do assunto em texto de ").concat(fullLength, " linhas, sendo ").concat(items.sentences.length, " com conteudo, \n            ou ").concat(porcentage, "% de aproveitamento"));
+            console.table("subject: ".concat(items.subject, " possui ").concat(items.numberOfTargetWords, " \n            palavras do assunto em texto de ").concat(fullLength, " linhas, sendo ").concat(items.sentences.length, " com conte\u00FAdo, \n            ou ").concat(porcentage, "% de aproveitamento"));
         });
     };
     return Score;
 }(main_1.default));
-// dar um deconto no simple past
 exports.default = Score;

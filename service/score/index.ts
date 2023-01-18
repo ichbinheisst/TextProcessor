@@ -55,7 +55,7 @@ class Score extends Base {
 
 
     }
-    private JoinResponses(text: string): Ifiltered[] {
+     JoinResponses(text: string): Ifiltered[] {
         const txt = this.Prepare(text)
         const response: Ifiltered[] = []
         const glos = new Glossary()

@@ -3,15 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Base = /** @class */ (function () {
     function Base() {
     }
-    /*    calculatePorcentage(total: number, concluded: number) {
-            if (!total || !concluded) {
-                return 0;
-            }
-            let n1 = concluded * 10;
-            return Math.round((n1 / total) * 10);
-        }
-    
-    */
     Base.prototype.treatData = function (text) {
         var Text = text === null || text === void 0 ? void 0 : text.split("").map(function (letters) {
             if (letters == "\n") {
