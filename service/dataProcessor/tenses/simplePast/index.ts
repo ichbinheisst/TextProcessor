@@ -56,9 +56,9 @@ class SimplePast extends Base implements ITense {
     }
     Index(data: IPrepare[]): Ifiltered {
 
-        const dataWithoutPerfectTense = this.getRidOfPerfect(data)
-        const IrregularVerbs = this.indexIrregularVerbs(dataWithoutPerfectTense)
-        const regularVerbs = this.indexRegularVerbs(dataWithoutPerfectTense)
+        //const dataWithoutPerfectTense = this.getRidOfPerfect(data)
+        const IrregularVerbs = this.indexIrregularVerbs(data)
+        const regularVerbs = this.indexRegularVerbs(data)
         const response = {
             targetWords: [...IrregularVerbs.targetWords, ...regularVerbs.targetWords],
             sentences: [...IrregularVerbs.sentences, ...IrregularVerbs.sentences],

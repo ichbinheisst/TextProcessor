@@ -5,8 +5,6 @@ import { ISubtitle } from '../exerciseGenerate/interface'
 
 type IPontuation = "." | "?" | "!" | ","
 
-
-
 class Format extends Base {
     private potuation = [".", "?", "!", ","]
     private auxModalList = [
@@ -71,7 +69,6 @@ class Format extends Base {
                 },
                 selected: false,
                 translation: "",
-
             }
         })
         return response

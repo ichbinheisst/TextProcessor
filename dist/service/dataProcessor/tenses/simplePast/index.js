@@ -76,9 +76,9 @@ var SimplePast = /** @class */ (function (_super) {
         };
     };
     SimplePast.prototype.Index = function (data) {
-        var dataWithoutPerfectTense = this.getRidOfPerfect(data);
-        var IrregularVerbs = this.indexIrregularVerbs(dataWithoutPerfectTense);
-        var regularVerbs = this.indexRegularVerbs(dataWithoutPerfectTense);
+        //const dataWithoutPerfectTense = this.getRidOfPerfect(data)
+        var IrregularVerbs = this.indexIrregularVerbs(data);
+        var regularVerbs = this.indexRegularVerbs(data);
         var response = {
             targetWords: __spreadArray(__spreadArray([], IrregularVerbs.targetWords, true), regularVerbs.targetWords, true),
             sentences: __spreadArray(__spreadArray([], IrregularVerbs.sentences, true), IrregularVerbs.sentences, true),

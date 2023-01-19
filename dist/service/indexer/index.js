@@ -137,6 +137,20 @@ var Glossary = /** @class */ (function () {
     Glossary.prototype.getParams = function () {
         return this.params;
     };
+    Glossary.prototype.getParamasByname = function (name) {
+        var res = this.params.find(function (param) {
+            return param.type == name;
+        });
+        if (!res) {
+            return {
+                data: [],
+                type: "",
+                level: "",
+                id: name
+            };
+        }
+        return res;
+    };
     return Glossary;
 }());
 exports.default = Glossary;

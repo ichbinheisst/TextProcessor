@@ -158,5 +158,21 @@ class Glossary {
     getParams(): Array<IParams> {
         return this.params
     }
+
+    getParamasByname(name: string) {
+        const res = this.params.find((param) => {
+            return param.type == name
+        })
+        if (!res) {
+
+            return {
+                data: [],
+                type: "",
+                level: "",
+                id: name
+            }
+        }
+        return res
+    }
 }
 export default Glossary
