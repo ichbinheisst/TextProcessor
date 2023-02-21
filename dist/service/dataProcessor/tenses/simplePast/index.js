@@ -76,7 +76,6 @@ var SimplePast = /** @class */ (function (_super) {
         };
     };
     SimplePast.prototype.Index = function (data) {
-        //const dataWithoutPerfectTense = this.getRidOfPerfect(data)
         var IrregularVerbs = this.indexIrregularVerbs(data);
         var regularVerbs = this.indexRegularVerbs(data);
         var response = {

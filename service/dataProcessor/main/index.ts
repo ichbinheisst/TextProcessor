@@ -57,8 +57,8 @@ class Base implements IBase {
     }
     Prepare(text: string): Array<IPrepare> {
         const cleanedData = this.treatData(text);
-        const splited = this.formatData(cleanedData);
-        return splited;
+        const response = this.formatData(cleanedData);
+        return response;
     }
 
     generateUniqueArrayFromArraysOfString(data: string[], uniqueArray: string[]): void {
@@ -70,11 +70,30 @@ class Base implements IBase {
         })
     }
 
-    findByParams(data: IPrepare[], params: string[]): Ifiltered {
+    findByParamsSingle(data: IPrepare[], params: string[]): Ifiltered {
+        let targetWords: Array<string> = [];
+        let foundSentences: Array<string> = [];
+        data.forEach((sentences) => {
+            sentences.text.forEach((word) => {
+                if (params.some((param) => param == word)) {
+                    foundSentences.push(sentences.text.reduce((prev, cur) => `${prev} ${cur}`))
+
+                    targetWords.push(word)
+                }
+            })
+        })
+
+        return {
+            targetWords,
+            numberOfTargetWords: targetWords.length,
+            sentences: foundSentences
+        };
+    }
+    findByParamsMulti(data: IPrepare[], params: string[]): Ifiltered {
         let targetWords: Array<string> = [];
         let foundSentences: Array<string> = [];
         data.forEach(sentences => {
-            const sentence = sentences.text.join(' ');
+            const sentence = sentences.text.join(' ').toLocaleLowerCase();
             params.forEach(word => {
                 if (sentence.includes(word)) {
                     targetWords.push(word);
@@ -82,14 +101,33 @@ class Base implements IBase {
                         foundSentences.push(sentence);
                     }
                 }
+
             });
         });
-
         return {
             targetWords,
             numberOfTargetWords: targetWords.length,
             sentences: foundSentences
         };
+    }
+
+    findByParams(data: IPrepare[], params: string[]): Ifiltered {
+        const multi: string[] = []
+        const single: string[] = []
+        params.forEach((param) => {
+            if (param.split(" ").length != 1) return multi.push(param)
+            single.push(param)
+        })
+
+        const resMulti = this.findByParamsMulti(data, multi)
+        const resSingle = this.findByParamsSingle(data, single)
+        return {
+            targetWords: [...resMulti.targetWords, ...resSingle.targetWords],
+            numberOfTargetWords: resSingle.numberOfTargetWords + resMulti.numberOfTargetWords,
+            sentences: [...resMulti.sentences, ...resSingle.sentences]
+        };
+
+        //return resSingle
     }
 
 }

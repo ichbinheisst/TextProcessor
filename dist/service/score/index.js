@@ -25,6 +25,8 @@ var simplePresent_1 = __importDefault(require("../dataProcessor/tenses/simplePre
 var simplePastContinous_1 = __importDefault(require("../dataProcessor/tenses/simplePastContinous"));
 var simpleContinous_1 = __importDefault(require("../dataProcessor/tenses/simpleContinous"));
 var simplePast_1 = __importDefault(require("../dataProcessor/tenses/simplePast"));
+var firstConditional_1 = __importDefault(require("../dataProcessor/conditional/firstConditional"));
+var secondConditional_1 = __importDefault(require("../dataProcessor/conditional/secondConditional"));
 var Score = /** @class */ (function (_super) {
     __extends(Score, _super);
     function Score() {
@@ -55,6 +57,12 @@ var Score = /** @class */ (function (_super) {
                     break;
                 case "past continuous":
                     res = new simplePastContinous_1.default().Index(data);
+                    break;
+                case "first condition":
+                    res = new firstConditional_1.default().Index(data);
+                    break;
+                case "second condition":
+                    res = new secondConditional_1.default().Index(data);
             }
             res.subject = element;
             return res;

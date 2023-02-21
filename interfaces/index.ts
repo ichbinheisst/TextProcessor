@@ -48,12 +48,15 @@ interface ITense {
 
 
 
-type tense =
+ export type tense =
     "simple present" |
     "present continous" |
     "simple past" |
     "future-will" |
-    "past continuous"
+    "past continuous"|
+    "first condition"|
+    "second condition"
+
 
 
     

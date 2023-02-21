@@ -1,4 +1,4 @@
-import { Ifiltered, IPrepare, Iscore, IParams, IGlossary } from '../../interfaces';
+import { Ifiltered, IPrepare, Iscore, IParams, IGlossary, tense } from '../../interfaces';
 import Base from '../dataProcessor/main';
 import Glossary from '../indexer';
 import SimpleFuture from '../dataProcessor/tenses/simpleFuture';
@@ -8,12 +8,9 @@ import PresentPerfect from '../dataProcessor/tenses/presentPerfect';
 import SimplePastContinous from '../dataProcessor/tenses/simplePastContinous';
 import SimplePresentContinous from '../dataProcessor/tenses/simpleContinous';
 import SimplePast from '../dataProcessor/tenses/simplePast';
-type tense =
-    "simple present" |
-    "present continous" |
-    "simple past" |
-    "future-will" |
-    "past continuous"
+import FistCondition from '../dataProcessor/conditional/firstConditional';
+import SecondCondition from '../dataProcessor/conditional/secondConditional';
+
 
 class Score extends Base {
     calculatePorcentage(total: number, concluded: number) {
@@ -23,7 +20,7 @@ class Score extends Base {
         let n1 = concluded * 10;
         return Math.round((n1 / total) * 10);
     }
-    private FilterTenses(data: IPrepare[], tense: tense[]): Ifiltered[] {
+    FilterTenses(data: IPrepare[], tense: tense[]): Ifiltered[] {
 
         const response = tense.map(element => {
             let res: Ifiltered;
@@ -42,6 +39,13 @@ class Score extends Base {
                     break
                 case "past continuous":
                     res = new SimplePastContinous().Index(data)
+                    break
+                case "first condition":
+                    res = new FistCondition().Index(data)
+                    break
+                case "second condition":
+                    res = new SecondCondition().Index(data)
+
 
             }
             res.subject = element
@@ -55,7 +59,7 @@ class Score extends Base {
 
 
     }
-     JoinResponses(text: string): Ifiltered[] {
+    JoinResponses(text: string): Ifiltered[] {
         const txt = this.Prepare(text)
         const response: Ifiltered[] = []
         const glos = new Glossary()

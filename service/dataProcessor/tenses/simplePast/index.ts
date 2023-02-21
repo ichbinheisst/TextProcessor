@@ -14,7 +14,6 @@ class SimplePast extends Base implements ITense {
         })
     }
 
-
     getRidOfPerfect(data: IPrepare[]): IPrepare[] {
         const PresentP = new PresentPerfect().Index(data)
         const PastP = new PastPerfect().Index(data)
@@ -26,10 +25,7 @@ class SimplePast extends Base implements ITense {
             if (perfectsTenseSentences.some((stc) => stc != sentence) && sentence.length > 0) {
                 response.push({ text: sentence.split(" ") })
             }
-
         })
-       
-
         return response
     }
 
@@ -55,8 +51,6 @@ class SimplePast extends Base implements ITense {
         }
     }
     Index(data: IPrepare[]): Ifiltered {
-
-        //const dataWithoutPerfectTense = this.getRidOfPerfect(data)
         const IrregularVerbs = this.indexIrregularVerbs(data)
         const regularVerbs = this.indexRegularVerbs(data)
         const response = {

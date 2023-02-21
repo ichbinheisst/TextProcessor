@@ -699,5 +699,15 @@ export const irregularVerb = [
     "Past-simple": "wrote",
     "Past-Participle": "written",
   },
+  {
+    Base: "be",
+    "Past-simple": "was",
+    "Past-Participle": "been",
+  },
+  {
+    Base: "be",
+    "Past-simple": "were",
+    "Past-Participle": "been",
+  },
 ];
 

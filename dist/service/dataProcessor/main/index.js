@@ -1,4 +1,13 @@
 "use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Base = /** @class */ (function () {
     function Base() {
@@ -39,8 +48,8 @@ var Base = /** @class */ (function () {
     };
     Base.prototype.Prepare = function (text) {
         var cleanedData = this.treatData(text);
-        var splited = this.formatData(cleanedData);
-        return splited;
+        var response = this.formatData(cleanedData);
+        return response;
     };
     Base.prototype.generateUniqueArrayFromArraysOfString = function (data, uniqueArray) {
         data.forEach(function (element) {
@@ -50,11 +59,28 @@ var Base = /** @class */ (function () {
             }
         });
     };
-    Base.prototype.findByParams = function (data, params) {
+    Base.prototype.findByParamsSingle = function (data, params) {
         var targetWords = [];
         var foundSentences = [];
         data.forEach(function (sentences) {
-            var sentence = sentences.text.join(' ');
+            sentences.text.forEach(function (word) {
+                if (params.some(function (param) { return param == word; })) {
+                    foundSentences.push(sentences.text.reduce(function (prev, cur) { return "".concat(prev, " ").concat(cur); }));
+                    targetWords.push(word);
+                }
+            });
+        });
+        return {
+            targetWords: targetWords,
+            numberOfTargetWords: targetWords.length,
+            sentences: foundSentences
+        };
+    };
+    Base.prototype.findByParamsMulti = function (data, params) {
+        var targetWords = [];
+        var foundSentences = [];
+        data.forEach(function (sentences) {
+            var sentence = sentences.text.join(' ').toLocaleLowerCase();
             params.forEach(function (word) {
                 if (sentence.includes(word)) {
                     targetWords.push(word);
@@ -69,6 +95,23 @@ var Base = /** @class */ (function () {
             numberOfTargetWords: targetWords.length,
             sentences: foundSentences
         };
+    };
+    Base.prototype.findByParams = function (data, params) {
+        var multi = [];
+        var single = [];
+        params.forEach(function (param) {
+            if (param.split(" ").length != 1)
+                return multi.push(param);
+            single.push(param);
+        });
+        var resMulti = this.findByParamsMulti(data, multi);
+        var resSingle = this.findByParamsSingle(data, single);
+        return {
+            targetWords: __spreadArray(__spreadArray([], resMulti.targetWords, true), resSingle.targetWords, true),
+            numberOfTargetWords: resSingle.numberOfTargetWords + resMulti.numberOfTargetWords,
+            sentences: __spreadArray(__spreadArray([], resMulti.sentences, true), resSingle.sentences, true)
+        };
+        //return resSingle
     };
     return Base;
 }());

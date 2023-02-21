@@ -23,6 +23,27 @@ class Glossary {
                 "present continous",
                 "simple past",
                 "future-will",
+                
+            ],
+            vocabulary: [
+                "weather"
+            ]
+
+        },
+        {
+            level: "a2",
+            content: [
+                { name: "can", id: 5 },
+                { name: "preposition of place", id: 6 },
+                { name: "preposition of time", id: 7 },
+                { name: "adverbs of frequency", id: 8 },
+
+            ],
+            tenses: [
+                "simple past",
+                "first condition",
+                "second condition"
+                
             ],
             vocabulary: [
                 "weather"
