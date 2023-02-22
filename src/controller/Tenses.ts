@@ -80,6 +80,18 @@ class TensesController extends Base {
         res.json({ result: [...tensesResponse, ...paramsResponse], "available_params": this.params, "available_tenses": this.tenses })
 
     }
+    indexAnalyst(req: Request, res: Response): void {
+        const { text } = req.body
+        if (typeof text != "string") {
+            res.status(401)
+            return
+        }
+       const score = new Score().score(text)
+        res.json({score})
+
+
+
+    }
 
 }
 export default new TensesController()

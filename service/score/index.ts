@@ -78,16 +78,18 @@ class Score extends Base {
     score(text: string) {
         const fullLength = this.Prepare(text).length
         const res: Ifiltered[] = this.JoinResponses(text)
+        const response: string[] = []
+
         res.forEach((items) => {
             const value = items.sentences.length
             const porcentage = this.calculatePorcentage(fullLength, value)
-            console.table(`subject: ${items.subject} possui ${items.numberOfTargetWords} 
-            palavras do assunto em texto de ${fullLength} linhas, sendo ${items.sentences.length} com conteúdo, 
-            ou ${porcentage}% de aproveitamento`
-            )
+            const resText = `subject: ${items.subject},o texto possuí ${items.numberOfTargetWords} palavras do assunto um em texto de ${fullLength} linhas, sendo ${items.sentences.length} com conteúdo, ou ${porcentage}% de aproveitamento`
+
+            response.push(resText)
+
         })
 
-
+        return response
 
 
 

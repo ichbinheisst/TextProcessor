@@ -90,11 +90,14 @@ var Score = /** @class */ (function (_super) {
         var _this = this;
         var fullLength = this.Prepare(text).length;
         var res = this.JoinResponses(text);
+        var response = [];
         res.forEach(function (items) {
             var value = items.sentences.length;
             var porcentage = _this.calculatePorcentage(fullLength, value);
-            console.table("subject: ".concat(items.subject, " possui ").concat(items.numberOfTargetWords, " \n            palavras do assunto em texto de ").concat(fullLength, " linhas, sendo ").concat(items.sentences.length, " com conte\u00FAdo, \n            ou ").concat(porcentage, "% de aproveitamento"));
+            var resText = "subject: ".concat(items.subject, ",o texto possu\u00ED ").concat(items.numberOfTargetWords, " palavras do assunto um em texto de ").concat(fullLength, " linhas, sendo ").concat(items.sentences.length, " com conte\u00FAdo, ou ").concat(porcentage, "% de aproveitamento");
+            response.push(resText);
         });
+        return response;
     };
     return Score;
 }(main_1.default));
